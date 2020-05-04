@@ -23,12 +23,13 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.NumberFormat;
+import java.time.Year;
 import java.util.ArrayList;
 
 public class Main_3a extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageView empty_imageview;
-    TextView no_data,date_view,day_view;
+    TextView no_data,date_view,day_view,count_view;
     MyDBHelper myDB;
     ArrayList<String> book_id, book_date, book_money, book_caption,book_spinner1,book_spinner2, book_note;
     CustomAdapter customAdapter;
@@ -38,6 +39,7 @@ public class Main_3a extends AppCompatActivity {
         date_view=(TextView)findViewById(R.id.date_view);
         recyclerView = findViewById(R.id.recyclerView);
         day_view = findViewById(R.id.day_view);
+        count_view=findViewById(R.id.count_view);
         empty_imageview = findViewById(R.id.empty_imageview);
         no_data = findViewById(R.id.no_data);
         myDB = new MyDBHelper(Main_3a.this);
@@ -50,6 +52,7 @@ public class Main_3a extends AppCompatActivity {
         book_note = new ArrayList<>();
         storeDataInArrays();
         querySettlement();
+        queryBalance();
         customAdapter = new CustomAdapter(Main_3a.this,this, book_id,book_date,book_money,book_caption,book_spinner1,book_spinner2,book_note);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(Main_3a.this));
@@ -132,6 +135,43 @@ public class Main_3a extends AppCompatActivity {
         string+="本期結算 "+num;
         Log.d("string",string);
         day_view.setText(string);
+    }
+
+    //累計餘絀
+    void queryBalance() {
+        int num=0;
+        String string="";
+        Intent myIntent=getIntent();
+        Bundle bundle = myIntent.getExtras();
+        String dateYear = bundle.getString("startDate").substring(0,7);
+        Log.d("年月",dateYear);
+        String income = "SELECT * FROM library WHERE (日期 LIKE '"+dateYear+"%' )AND (狀態 = '收入' )";
+        String expense ="SELECT * FROM library WHERE (日期 LIKE'"+dateYear+"%')AND (狀態 = '支出' )";
+        Log.d("累計收入",income);
+        SQLiteDatabase db = myDB.getReadableDatabase();
+        Cursor cursor = null;
+        Cursor cursor1 = null;
+        if (db != null) {
+            cursor = db.rawQuery(income, null);
+            cursor1 = db.rawQuery(expense, null);
+        }
+        if (cursor.getCount() == 0) {
+            count_view.setText("累計餘絀:0");
+        } else {
+            while (cursor.moveToNext()) {
+                num+=(cursor.getInt(2));
+            }
+        }
+        if (cursor1.getCount() == 0) {
+            count_view.setText("累計餘絀:0");
+        } else {
+            while (cursor1.moveToNext()) {
+                num-=(cursor1.getInt(2));
+            }
+        }
+        string+="累計餘絀 "+num;
+        Log.d("string",string);
+        count_view.setText(string);
     }
 
     @Override

@@ -15,7 +15,10 @@
         <item name="colorPrimary">#37988F</item>
         <item name="colorPrimaryDark">#35AA9F</item>
         <item name="android:navigationBarColor">#263326</item>
+        <item name="colorAccent">#35AA9F</item>
+        <item name="colorControlHighlight">#7ECDC5</item>
     </style>
+
 
     <!--    <style name="at2_2" parent="Theme.AppCompat.Light.DarkActionBar">-->
     <!--        <item name="colorControlNormal">@android:color/darker_gray</item>-->
@@ -31,6 +34,8 @@
         <item name="colorPrimary">#D87093</item>
         <item name="colorPrimaryDark">	#FFC0CB</item>
         <item name="android:navigationBarColor">#320A17</item>
+        <item name="colorAccent">#E91E63</item>
+        <item name="colorControlHighlight">#C4D0E6</item>
     </style>
 
     <style name="at4" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -50,4 +55,7 @@
         <item name="colorPrimaryDark">#707175</item>
         <item name="android:navigationBarColor">#000000</item>
     </style>
+
+
+
 </resources>

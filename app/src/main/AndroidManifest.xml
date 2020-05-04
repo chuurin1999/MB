@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/at1">
+        <activity android:name=".Main_3_2_1"></activity>
         <activity
             android:name=".Main_5"
             android:label="@string/app_a5"
@@ -24,7 +25,7 @@
             android:name=".Main_4_1_1"
             android:label="@string/app_a4_1_1"
             android:parentActivityName=".Main_1"
-            android:theme="@style/at4"/>
+            android:theme="@style/at4" />
         <activity
             android:name=".Main_3"
             android:label="@string/app_a3"
@@ -57,4 +58,5 @@
             android:name=".UpdateActivity"
             android:parentActivityName=".Main_3_1_2_4a_3" />
     </application>
+
 </manifest>

@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +28,8 @@ public class Main_3_1_2_4a_3 extends AppCompatActivity {
     RecyclerView recyclerView;
     FloatingActionButton add_button;
     ImageView empty_imageview;
-    TextView no_data, date_view, day_view;
+    TextView no_data, date_view, day_view,count_view;
+    Button chart_view;
     MyDBHelper myDB;
     ArrayList<String> book_id, book_date, book_money, book_caption, book_spinner1, book_spinner2, book_note;
     CustomAdapter customAdapter;
@@ -37,6 +39,8 @@ public class Main_3_1_2_4a_3 extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         date_view = findViewById(R.id.date_view);
         day_view = findViewById(R.id.day_view);
+        chart_view=findViewById(R.id.chart_view);
+        count_view=findViewById(R.id.count_view);
         add_button = findViewById(R.id.add_button);
         empty_imageview = findViewById(R.id.empty_imageview);
         no_data = findViewById(R.id.no_data);
@@ -44,6 +48,13 @@ public class Main_3_1_2_4a_3 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Main_3_1_2_4a_3.this, Main_2.class);
+                startActivity(intent);
+            }
+        });
+        chart_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Main_3_1_2_4a_3.this, Main_3_2_1.class);
                 startActivity(intent);
             }
         });
@@ -57,6 +68,7 @@ public class Main_3_1_2_4a_3 extends AppCompatActivity {
         book_note = new ArrayList<>();
         storeDataInArrays();
         querySettlement();
+        queryBalance();
         customAdapter = new CustomAdapter(Main_3_1_2_4a_3.this, this, book_id, book_date, book_money, book_caption, book_spinner1, book_spinner2, book_note);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(Main_3_1_2_4a_3.this));
@@ -140,6 +152,44 @@ public class Main_3_1_2_4a_3 extends AppCompatActivity {
         Log.d("string",string);
         day_view.setText(string);
     }
+//累計餘絀
+    void queryBalance() {
+        int num=0;
+        String string="";
+        Intent myIntent = getIntent();
+        Bundle bundle = myIntent.getExtras();
+        String OneDay = bundle.getString("OneDay").substring(0,7);
+        Log.d("YearMonth",OneDay);
+        String income = "SELECT * FROM library WHERE (日期 LIKE '"+OneDay+"%') AND (狀態 = '收入' )";
+        String expense = "SELECT *FROM library WHERE (日期 LIKE '"+OneDay+"%') AND (狀態 = '支出' )";
+        Log.d("query1",income);
+        SQLiteDatabase db = myDB.getReadableDatabase();
+        Cursor cursor = null;
+        Cursor cursor1 = null;
+        if (db != null) {
+            cursor = db.rawQuery(income, null);
+            cursor1 = db.rawQuery(expense, null);
+        }
+        if (cursor.getCount() == 0) {
+            count_view.setText("累計餘絀:0");
+        } else {
+            while (cursor.moveToNext()) {
+                num+=(cursor.getInt(2));
+            }
+        }
+        if (cursor1.getCount() == 0) {
+            count_view.setText("累計餘絀:0");
+        } else {
+            while (cursor1.moveToNext()) {
+                num-=(cursor1.getInt(2));
+            }
+
+        }
+        string+="累計餘絀 "+num;
+        Log.d("string",string);
+        count_view.setText(string);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

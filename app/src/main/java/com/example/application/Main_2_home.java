@@ -56,6 +56,7 @@ public class Main_2_home extends Fragment {
         clear_button.setOnClickListener(clear_button_onClick);
         add_button.setOnClickListener(add_button_onClick);
         context = getContext();
+        clearAll();
         return view;
     }
     private final View.OnClickListener add_button_onClick = new View.OnClickListener(){
