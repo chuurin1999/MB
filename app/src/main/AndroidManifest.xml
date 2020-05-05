@@ -56,7 +56,7 @@
             android:theme="@style/at2" />
         <activity
             android:name=".UpdateActivity"
-            android:parentActivityName=".Main_3_1_2_4a_3" />
+            android:parentActivityName=".Main_0" />
     </application>
 
 </manifest>

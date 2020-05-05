@@ -143,10 +143,10 @@ public class Main_3a extends AppCompatActivity {
         String string="";
         Intent myIntent=getIntent();
         Bundle bundle = myIntent.getExtras();
-        String dateYear = bundle.getString("startDate").substring(0,7);
-        Log.d("年月",dateYear);
-        String income = "SELECT * FROM library WHERE (日期 LIKE '"+dateYear+"%' )AND (狀態 = '收入' )";
-        String expense ="SELECT * FROM library WHERE (日期 LIKE'"+dateYear+"%')AND (狀態 = '支出' )";
+        String startDate = bundle.getString("startDate").substring(0,7);
+        Log.d("年月",startDate);
+        String income = "SELECT * FROM library WHERE (日期 LIKE '"+startDate+"%' )AND (狀態 = '收入' )";
+        String expense ="SELECT * FROM library WHERE (日期 LIKE'"+startDate+"%')AND (狀態 = '支出' )";
         Log.d("累計收入",income);
         SQLiteDatabase db = myDB.getReadableDatabase();
         Cursor cursor = null;
