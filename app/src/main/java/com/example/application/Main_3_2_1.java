@@ -2,82 +2,139 @@ package com.example.application;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.charts.Cartesian;
-import com.anychart.core.cartesian.series.RangeColumn;
-import com.anychart.data.Mapping;
-import com.anychart.data.Set;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main_3_2_1 extends AppCompatActivity {
-
+    private BarChart mChart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3_2_1);
 
-        AnyChartView anyChartView = findViewById(R.id.any_chart_view);
-        anyChartView.setProgressBar(findViewById(R.id.progress_bar));
+        mChart=(BarChart)findViewById(R.id.chart1);
+        mChart.setBackgroundColor(Color.WHITE);
+        mChart.setExtraTopOffset(-30f);
+        mChart.setExtraBottomOffset(10f);
+        mChart.setExtraLeftOffset(70f);
+        mChart.setExtraRightOffset(70f);
 
-        Cartesian cartesian = AnyChart.cartesian();
+        mChart.setDrawBarShadow(false);
+        mChart.setDrawValueAboveBar(true);
 
-        cartesian.title("日統計圖表");
+        mChart.getDescription().setEnabled(false);
 
-        List<DataEntry> data = new ArrayList<>();
-        data.add(new CustomDataEntry("前日餘絀", 5.8, 7.9, 6.1, 8.9));
-        data.add(new CustomDataEntry("薪資收入", 4.6, 6.1, 5.5, 8.2));
-        data.add(new CustomDataEntry("獎金收入", 5.9, 8.1, 5.9, 8.1));
-        data.add(new CustomDataEntry("投資收入", 7.8, 10.7, 7.1, 9.8));
-        data.add(new CustomDataEntry("兼職收入", 10.5, 13.7, 8.3, 10.7));
-        data.add(new CustomDataEntry("零用金", 13.8, 17, 10.7, 14.5));
-        data.add(new CustomDataEntry("飲食支出", 16.5, 18.5, 12.3, 16.7));
-        data.add(new CustomDataEntry("交通支出", 17.8, 19, 14, 16.3));
-        data.add(new CustomDataEntry("娛樂支出", 15.4, 17.8, 13.7, 15.3));
-        data.add(new CustomDataEntry("醫療支出", 12.7, 15.3, 12.3, 14.4));
-        data.add(new CustomDataEntry("生活支出", 9.8, 13, 12.9, 10.7));
-        data.add(new CustomDataEntry("教育支出", 9, 10.1, 8.2, 11.1));
+        // scaling can now only be done on x- and y-axis separately
+        mChart.setPinchZoom(false);
 
-        Set set = Set.instantiate();
-        set.data(data);
-        Mapping londonData = set.mapAs("{ x: 'x', high: 'londonHigh', low: 'londonLow' }");
-        Mapping edinburgData = set.mapAs("{ x: 'x', high: 'edinburgHigh', low: 'edinburgLow' }");
+        mChart.setDrawGridBackground(false);
 
-        RangeColumn columnLondon = cartesian.rangeColumn(londonData);
-        columnLondon.name("London收入");
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+//        xAxis.setTypeface(tfRegular);
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawAxisLine(false);
+        xAxis.setTextColor(Color.LTGRAY);
+        xAxis.setTextSize(13f);
+        xAxis.setLabelCount(5);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setGranularity(1f);
 
-        RangeColumn columnEdinburg = cartesian.rangeColumn(edinburgData);
-        columnEdinburg.name("Edinburgh支出");
+        YAxis left = mChart.getAxisLeft();
+        left.setDrawLabels(false);
+        left.setSpaceTop(25f);
+        left.setSpaceBottom(25f);
+        left.setDrawAxisLine(false);
+        left.setDrawGridLines(false);
+        left.setDrawZeroLine(true); // draw a zero line
+        left.setZeroLineColor(Color.GRAY);
+        left.setZeroLineWidth(0.7f);
+        mChart.getAxisRight().setEnabled(false);
+        mChart.getLegend().setEnabled(false);
 
-        cartesian.xAxis(true);
-        cartesian.yAxis(true);
-
-        cartesian.yScale()
-                .minimum(4d)
-                .maximum(20d);
-
-        cartesian.legend(true);
-
-        cartesian.yGrid(true)
-                .yMinorGrid(true);
-
-        cartesian.tooltip().titleFormat("{%SeriesName} ({%x})");
-
-        anyChartView.setChart(cartesian);
+        // THIS IS THE ORIGINAL DATA YOU WANT TO PLOT
+        final List<Data>data=new ArrayList<>();
+        data.add(new Data(0f, -224.1f, "12-29"));
+        data.add(new Data(1f, 238.5f, "12-30"));
+        data.add(new Data(2f, 1280.1f, "12-31"));
+        data.add(new Data(3f, -442.3f, "01-01"));
+        data.add(new Data(4f, -2280.1f, "01-02"));
+        xAxis.setValueFormatter(new com.github.mikephil.charting.formatter.ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return data.get(Math.min(Math.max((int) value, 0), data.size()-1)).xAxisValue;
+            }
+        });
+        setData(data);
     }
 
-    private class CustomDataEntry extends DataEntry {
-        public CustomDataEntry(String x, Number edinburgHigh, Number edinburgLow, Number londonHigh, Number londonLow) {
-            setValue("x", x);
-            setValue("edinburgHigh", edinburgHigh);
-            setValue("edinburgLow", edinburgLow);
-            setValue("londonHigh", londonHigh);
-            setValue("londonLow", londonLow);
+    private  void  setData(List<Data> dataList){
+        ArrayList<BarEntry> values=new ArrayList<>();
+        List<Integer> colors=new ArrayList<>();
+
+        int green= Color.rgb(110,190,102);
+        int red =Color.rgb(211,87,44);
+
+        for (int i=0;i<dataList.size();i++){
+            Data d=dataList.get(i);
+            BarEntry entry=new BarEntry(d.xValue,d.yValue);
+            values.add(entry);
+
+            if (d.yValue>=0){
+                colors.add(red);
+            }else {
+                colors.add(green);
+            }
+        }
+
+        BarDataSet set;
+        set=new BarDataSet(values,"Values");
+        set.setColors(colors);
+        set.setValueTextColors(colors);
+
+        BarData data=new BarData(set);
+        data.setValueTextSize(15f);
+
+        data.setValueFormatter(new ValueFormatter());
+        data.setBarWidth(0.9f);
+
+        mChart.setData(data);
+        mChart.invalidate();
+    }
+    private  class Data{
+        public String xAxisValue;
+        public float xValue;
+        public float yValue;
+
+        public Data(float xValue,float yValue,String xAxisValue){
+            this.xAxisValue=xAxisValue;
+            this.xValue=xValue;
+            this.yValue=yValue;
+
         }
     }
+    private class ValueFormatter extends com.github.mikephil.charting.formatter.ValueFormatter implements IValueFormatter {
+        private DecimalFormat mFormat;
+        public  ValueFormatter(){
+            mFormat=new DecimalFormat("#####.0");
+        }
+        public String getFormattedValue(float value, Entry entry, int daaSetIndex, ViewPortHandler viewPortHandler){
+            return mFormat.format(value);
+        }
+    }
+
 }
