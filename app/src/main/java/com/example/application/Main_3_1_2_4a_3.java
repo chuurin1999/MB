@@ -54,7 +54,7 @@ public class Main_3_1_2_4a_3 extends AppCompatActivity {
         chart_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Main_3_1_2_4a_3.this, Main_3_2_1.class);
+                Intent intent = new Intent(Main_3_1_2_4a_3.this, Main_3_2_2.class);
                 startActivity(intent);
             }
         });

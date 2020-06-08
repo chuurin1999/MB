@@ -11,11 +11,11 @@
 
     <style name="at2" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">@android:color/darker_gray</item>
-        <item name="colorControlActivated">#88AA00</item>
-        <item name="colorPrimary">#37988F</item>
-        <item name="colorPrimaryDark">#35AA9F</item>
+        <item name="colorControlActivated">#7ECDC5</item> //日曆內顏色
+        <item name="colorPrimary">#37988F</item> //大標題
+        <item name="colorPrimaryDark">#35AA9F</item>   //狀態列
         <item name="android:navigationBarColor">#263326</item>
-        <item name="colorAccent">#35AA9F</item>
+        <item name="colorAccent">#689F9A</item>
         <item name="colorControlHighlight">#7ECDC5</item>
     </style>
 
@@ -30,21 +30,21 @@
 
     <style name="at3" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">@android:color/darker_gray</item>
-        <item name="colorControlActivated">#D87093</item>
-        <item name="colorPrimary">#D87093</item>
-        <item name="colorPrimaryDark">	#FFC0CB</item>
-        <item name="android:navigationBarColor">#320A17</item>
-        <item name="colorAccent">#E91E63</item>
-        <item name="colorControlHighlight">#C4D0E6</item>
+        <item name="colorControlActivated">	#C0AFE1</item> //日曆內顏色
+        <item name="colorPrimary">#B69FE8</item>  //大標題
+        <item name="colorPrimaryDark">#C7B6EA</item>    //狀態列
+        <item name="android:navigationBarColor">#3E3255</item> //最下面
+        <item name="colorAccent">#9E7EDC</item> //日曆顏色
+        <item name="colorControlHighlight">#CDC3E1</item>
     </style>
 
     <style name="at4" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">@android:color/darker_gray</item>
-        <item name="colorControlActivated">#04A1C6</item>
-        <item name="colorPrimary">#6495ED</item>
-        <item name="colorPrimaryDark">#749FEC</item>
-        <item name="android:navigationBarColor">#172337</item>
-        <item name="colorAccent">#6495ED</item>
+        <item name="colorControlActivated">#04A1C6</item> //日曆內顏色
+        <item name="colorPrimary">#99BBFF</item>  //大標題
+        <item name="colorPrimaryDark">#D0E0FF</item> //狀態列
+        <item name="android:navigationBarColor">#172337</item> //最下面
+        <item name="colorAccent">#6495ED</item>  //日曆顏色
         <item name="colorControlHighlight">#C4D0E6</item>
     </style>
 

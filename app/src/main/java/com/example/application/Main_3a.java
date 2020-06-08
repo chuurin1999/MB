@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,18 +31,26 @@ public class Main_3a extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageView empty_imageview;
     TextView no_data,date_view,day_view,count_view;
+    Button chart_view;
     MyDBHelper myDB;
     ArrayList<String> book_id, book_date, book_money, book_caption,book_spinner1,book_spinner2, book_note;
     CustomAdapter customAdapter;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3a);
-        date_view=(TextView)findViewById(R.id.date_view);
+        date_view=findViewById(R.id.date_view);
         recyclerView = findViewById(R.id.recyclerView);
         day_view = findViewById(R.id.day_view);
         count_view=findViewById(R.id.count_view);
         empty_imageview = findViewById(R.id.empty_imageview);
         no_data = findViewById(R.id.no_data);
+        chart_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Main_3a.this, Main_3_2_2.class);
+                startActivity(intent);
+            }
+        });
         myDB = new MyDBHelper(Main_3a.this);
         book_id = new ArrayList<>();
         book_date = new ArrayList<>();
